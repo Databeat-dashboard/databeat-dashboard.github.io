@@ -359,7 +359,7 @@
   var landed = false;
   var CUSTOM = {
     summary: { section: 'summaryPage', nav: 'navSummary', draw: function () { renderSummary(); } },
-    acctool: { section: 'pvToolPage', nav: 'navAcctTool', tab: 'account', draw: function () { drawTool(); } }
+    acctool: { section: 'pvToolPage', nav: 'navAcctTool', draw: function () { drawTool(); } }
   };
   window.showPage = function (page) {
     if (!landed && access()) { landed = true; page = 'summary'; }
@@ -383,7 +383,7 @@
     var r = origApply.apply(this, arguments);
     try { applyTheme('light'); } catch (e) {}      // the platform uses one light theme
     var sn = $('navSummary'); if (sn) sn.style.display = '';
-    var tn = $('navAcctTool'); if (tn) tn.style.display = can('account') && toolUrl() ? '' : 'none';
+    var tn = $('navAcctTool'); if (tn) tn.style.display = '';   // everyone on the platform
     tidyGroups();
     drawWho();
     setTimeout(drawWho, 1500);                     // the sign-out control appears a moment later
@@ -722,7 +722,9 @@
   }
 
   /* ------------------------------------------------------------------ Account Scoring tool (the scoring app itself) */
-  function toolUrl() { try { return ACCOUNT_SCORING_URL || ''; } catch (e) { return ''; } }
+  /** The Account Scoring app (its own Apps Script). Open to everyone who can sign in to the platform; the app checks its own access. */
+  var ACCOUNT_TOOL_URL = 'https://script.google.com/a/macros/databeat.io/s/AKfycbwEDZ09Gnv1NKgxHqFKRGIPbdTwaNgVou1ycjZU80DafRGhS8Q3bL556dqLo3GkP2ix-g/exec';
+  function toolUrl() { return ACCOUNT_TOOL_URL; }
   function drawTool(reload) {
     var box = $('pvToolPage'); if (!box) return;
     var url = toolUrl();
