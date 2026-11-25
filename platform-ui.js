@@ -27,6 +27,7 @@
   function access() { try { return CurrentAccess || null; } catch (e) { return null; } }
   function can(tab) { var a = access(); return !!a && (a.isAdmin || (a.tabs || []).indexOf(tab) !== -1); }
   function band5(v) { return v === null ? 'na' : v >= 4 ? 'good' : v >= 3 ? 'mid' : 'bad'; }
+  function pl(n, one, many) { return n + ' ' + (n === 1 ? one : (many || one + 's')); }
   function titleCase(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
 
   /* ------------------------------------------------------------------ theme */
@@ -534,7 +535,7 @@
     var rmgAll = D.rmg ? (D.rmg.rows || []) : null, rmgOpen = rmgAll ? rmgAll.filter(function (r) { return !isClosed(r); }) : null;
     var biz = D.biz && D.biz.monthlySummary && D.biz.monthlySummary[0];
 
-    var scope = all ? 'the whole company' : 'your team' + (D.ai && D.ai.people ? ' · ' + D.ai.people.length + ' people' : '') + (ac ? ' · ' + (ac.n + ac.unscored) + ' accounts' : '');
+    var scope = all ? 'the whole company' : 'your team' + (D.ai && D.ai.people ? ' · ' + pl(D.ai.people.length, 'person', 'people') : '') + (ac ? ' · ' + pl(ac.n + ac.unscored, 'account') : '');
     var h = header(a, esc(scope));
     var m = [];
 
@@ -552,14 +553,14 @@
         foot: 'Hours saved ÷ (headcount × 40 h × weeks)' }));
     }
     if (ac) {
-      m.push(mod({ page: 'account', icon: 'account', title: 'Account scoring', tag: ac.quarter, big: fmt(ac.avg, 2) + '<small>/ 5</small>', line: (ac.n + ac.unscored) + ' accounts · average overall',
+      m.push(mod({ page: 'account', icon: 'account', title: 'Account scoring', tag: ac.quarter, big: fmt(ac.avg, 2) + '<small>/ 5</small>', line: pl(ac.n + ac.unscored, 'account') + ' · average overall',
         bar: bar([['4+', ac.good, C.good], ['3–4', ac.mid, C.mid], ['<3', ac.bad, C.bad], ['n/a', ac.unscored, C.unk]]),
         legend: legend([['4 and above', ac.good, C.good], ['3 to 4', ac.mid, C.mid], ['Below 3', ac.bad, C.bad], ['Not scored', ac.unscored, C.unk]]),
         foot: ac.histAvg !== null ? 'Latest saved history averages ' + fmt(ac.histAvg, 2) : 'From Accounts details' }));
     }
     if (ld) {
       var B = ld.bands, bk = [['Exceptional', C.good], ['Strong', '#7CC7A2'], ['On track', C.brand], ['Developing', C.mid], ['Needs support', C.bad]];
-      m.push(mod({ page: 'lead', icon: 'lead', title: 'Lead scoring', tag: periodLabel(ld.period), big: fmt(ld.avg, 2) + '<small>/ 5</small>', line: ld.n + ' leads scored' + delta(ld.avg, ld.prevAvg, 2),
+      m.push(mod({ page: 'lead', icon: 'lead', title: 'Lead scoring', tag: periodLabel(ld.period), big: fmt(ld.avg, 2) + '<small>/ 5</small>', line: pl(ld.n, 'lead') + ' scored' + delta(ld.avg, ld.prevAvg, 2),
         bar: bar(bk.map(function (x) { return [x[0], B[x[0]] || 0, x[1]]; })),
         legend: legend([['Strong +', (B.Exceptional || 0) + (B.Strong || 0), C.good], ['On track', B['On track'] || 0, C.brand], ['Developing', B.Developing || 0, C.mid], ['Needs support', B['Needs support'] || 0, C.bad]]),
         foot: 'Monthly weighted score' }));
@@ -577,19 +578,19 @@
     }
     if (cs) {
       var c8 = cs.vals.filter(function (v) { return v >= 8; }).length, c6 = cs.vals.filter(function (v) { return v >= 6 && v < 8; }).length, c0 = cs.vals.filter(function (v) { return v < 6; }).length;
-      m.push(mod({ page: 'csat', icon: 'csat', title: 'CSAT', tag: cs.period, big: fmt(cs.avg, 1) + '<small>/ 10</small>', line: cs.vals.length + ' clients rated',
+      m.push(mod({ page: 'csat', icon: 'csat', title: 'CSAT', tag: cs.period, big: fmt(cs.avg, 1) + '<small>/ 10</small>', line: pl(cs.vals.length, 'client') + ' rated',
         bar: bar([['8+', c8, C.good], ['6–8', c6, C.mid], ['<6', c0, C.bad]]),
         legend: legend([['8 and above', c8, C.good], ['6 to 8', c6, C.mid], ['Below 6', c0, C.bad], ['Clients', cs.vals.length, C.unk]]), foot: 'Client satisfaction, half-yearly' }));
     }
     if (es) {
       var dir = latestPeriod(D.esat.rows || [], [es.period], function (v) { return v.direct; }), ind = latestPeriod(D.esat.rows || [], [es.period], function (v) { return v.indirect; });
       var e4 = es.vals.filter(function (v) { return v >= 4; }).length, e3 = es.vals.filter(function (v) { return v >= 3 && v < 4; }).length, e0 = es.vals.filter(function (v) { return v < 3; }).length;
-      m.push(mod({ page: 'esat', icon: 'esat', title: 'ESAT', tag: es.period, big: fmt(es.avg, 2) + '<small>/ 5</small>', line: es.vals.length + ' managers · overall score',
+      m.push(mod({ page: 'esat', icon: 'esat', title: 'ESAT', tag: es.period, big: fmt(es.avg, 2) + '<small>/ 5</small>', line: pl(es.vals.length, 'manager') + ' · overall score',
         bar: bar([['4+', e4, C.good], ['3–4', e3, C.mid], ['<3', e0, C.bad]]),
         legend: legend([['Direct team', dir ? fmt(dir.avg, 2) : '–', C.brand], ['Indirect team', ind ? fmt(ind.avg, 2) : '–', C.prog], ['4 and above', e4, C.good], ['Below 4', e3 + e0, C.mid]]), foot: 'Employee satisfaction' }));
     }
     if (pf) {
-      m.push(mod({ page: 'performance', icon: 'performance', title: 'Performance', tag: pf.period, big: fmt(pf.avg, 2), line: pf.vals.length + ' people · average',
+      m.push(mod({ page: 'performance', icon: 'performance', title: 'Performance', tag: pf.period, big: fmt(pf.avg, 2), line: pl(pf.vals.length, 'person', 'people') + ' · average',
         bar: progress(pf.avg / 5 * 100, C.brand),
         legend: legend([['Actual', fmt(pf.avg, 2), C.brand], [pfx ? pfx.period.replace(/^Projected\s*/i, 'Projected ') : 'Projected', pfx ? fmt(pfx.avg, 2) : '–', C.prog]]), foot: 'Performance metrics' }));
     }
