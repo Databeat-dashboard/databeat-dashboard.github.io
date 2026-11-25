@@ -12,7 +12,7 @@
   var DOMAIN = String(window.ALLOWED_DOMAIN || 'databeat.io').toLowerCase();
   var SDK = 'https://www.gstatic.com/firebasejs/10.12.2/';
   var READS = ['getCurrentUserAccess', 'getBusinessSummary', 'getOverallDepartmentSummary', 'getCoreTeamAiEfficiency', 'getBillables', 'getBillablesComments',
-    'getScorecardData', 'getLeadGuidelines', 'getCsatData', 'getEsatData', 'getRmgData', 'getPerformanceMetricsData', 'getAiGainsData', 'getAccessAdminData'];
+    'getScorecardData', 'getLeadGuidelines', 'getCsatData', 'getEsatData', 'getRmgData', 'getPerformanceMetricsData', 'getAiGainsData', 'getAccountScoringData', 'getAccessAdminData'];
   var WRITES = ['saveAccessUser', 'removeAccessUser', 'saveAiVisibility'];
   var MARK = 'getCurrentUserAccess';
 
