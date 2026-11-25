@@ -11,4 +11,4 @@ window.ALLOWED_DOMAIN = 'databeat.io';
 
 // The platform's own Apps Script web app (Deploy > New deployment > Web app, Execute as: Me, Who has access: Anyone).
 // With it, access changes and data updates are applied in seconds; left empty, they go through the one-minute timer.
-window.PLATFORM_API_URL = '';
+window.PLATFORM_API_URL = 'https://script.google.com/a/macros/databeat.io/s/AKfycbx1QlZ76FYXSl6d5mPCZrT_fQE81F2IzaXTQJxgLNx0FL6IbvqjUoviNU_6UUplm_jE/exec';
