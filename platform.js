@@ -3,7 +3,8 @@
  *   - Sign-in: Firebase Authentication with Google, @databeat.io accounts only.
  *   - Reading: the page reads ONLY views/<your email>/calls/... (the Firestore rules refuse anything else). Apps Script writes your
  *     view there, already cut down to what you may see (PlatformScope.gs / PlatformViews.gs), and refreshes it every 10 minutes.
- *   - Admin changes (Access Control): written to "actions"; Apps Script does them as you within about a minute, re-checking you are an admin.
+ *   - Admin changes (Access Control): sent straight to the platform's Apps Script web app (PLATFORM_API_URL) with your sign-in token,
+ *     applied in seconds; if the web app cannot be reached they go through "actions" and the one-minute timer instead.
  *   - Local test: ?views=<file.json> reads a saved set of views instead of Firestore (nothing is sent anywhere).
  */
 (function () {
@@ -15,6 +16,7 @@
     'getScorecardData', 'getLeadGuidelines', 'getCsatData', 'getEsatData', 'getRmgData', 'getPerformanceMetricsData', 'getAiGainsData', 'getAccountScoringData', 'getAccessAdminData'];
   var WRITES = ['saveAccessUser', 'removeAccessUser', 'saveAiVisibility'];
   var MARK = 'getCurrentUserAccess';
+  var API = String(window.PLATFORM_API_URL || '').trim();
 
   var css = document.createElement('style');
   css.textContent =
@@ -74,9 +76,25 @@
   }
   function stored(fn, args) { var c = CALLS[key(fn, args)]; return c ? JSON.parse(c.json) : null; }
   function answer(r) { if (r.ok) return r.result; throw new Error(r.error || 'Failed'); }
-  async function ask(fn, args) {   // a view that is not prepared yet: Apps Script prepares it within about a minute
+  /** The platform's web app: answers in seconds. Rejects when it is not set up or cannot be reached (callers then use the queue). */
+  async function api(op, extra, ms) {
+    if (!API || LOCAL || !auth || !auth.currentUser) throw new Error('no api');
+    var token = await auth.currentUser.getIdToken();
+    var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, ms || 90000) : null;
+    try {
+      var r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ platform: 1, idToken: token, op: op }, extra || {})), signal: ctl ? ctl.signal : undefined });
+      var j = await r.json();
+      if (!j || j.ok !== true) { var err = new Error((j && j.error) || 'The platform did not answer.'); err.answered = true; throw err; }
+      return j;
+    } finally { if (timer) clearTimeout(timer); }
+  }
+  function atOf(fn, args) { var c = CALLS[key(fn, args)]; return c ? c.at : ''; }
+  async function ask(fn, args) {   // a view that is not prepared yet
     if (LOCAL) throw new Error('Not in the saved views: ' + fn);
-    toast('Fetching this from the sheet… (up to a minute)', 70000);
+    toast('Fetching this from the sheet…', 70000);
+    try { await api('prepare', { calls: [[fn, args]] }); await waitFor(function () { return !!stored(fn, args); }, 15000); toast(''); return answer(stored(fn, args)); }
+    catch (e) { /* fall back to the queue */ }
     var send = function () { return fb.fs.setDoc(fb.fs.doc(db, 'wants', me), { at: new Date().toISOString(), pending: true, calls: fb.fs.arrayUnion(JSON.stringify({ fn: fn, args: args })) }, { merge: true }); };
     await send();
     try { await waitFor(function () { return !!stored(fn, args); }, 75000); }
@@ -90,18 +108,36 @@
   }
   async function act(fn, args) {   // an Admin change: Apps Script does it as you, after checking you are an admin
     if (LOCAL) throw new Error('Changes are not saved in the local test.');
+    var before = atOf('getAccessAdminData', []);
+    toast('Saving…', 60000);
+    try {
+      var j = await api('action', { fn: fn, args: args }, 60000);
+      try { await waitFor(function () { return atOf('getAccessAdminData', []) !== before; }, 8000); } catch (e) { /* the list follows in a moment */ }
+      toast('Saved. Live on the platform and the dashboard.', 3500);
+      return j.result;
+    } catch (e) {
+      if (e && e.answered) { toast(''); throw e; }
+    }
     toast('Saving… it is applied within about a minute.', 120000);
     var ref = await fb.fs.addDoc(fb.fs.collection(db, 'actions'), { by: me, fn: fn, args: JSON.stringify(args), status: 'new', at: new Date().toISOString() });
     var res = await new Promise(function (ok, bad) {
       var stop = null, t = setTimeout(function () { if (stop) stop(); bad(new Error('Not applied yet: the Apps Script timer (platformQuick) may be stopped.')); }, 240000);
       stop = fb.fs.onSnapshot(ref, function (s) {
         var x = s.data() || {};
-        if (x.status && x.status !== 'new') { clearTimeout(t); stop(); try { ok(Object.assign(JSON.parse(x.json || '{}'), { doneAt: x.doneAt || '' })); } catch (e) { bad(e); } }
+        if (x.status === 'done' || x.status === 'error') { clearTimeout(t); stop(); try { ok(Object.assign(JSON.parse(x.json || '{}'), { doneAt: x.doneAt || '' })); } catch (e) { bad(e); } }
       }, function (e) { clearTimeout(t); bad(e); });
     });
+    try { await waitFor(function () { return atOf('getAccessAdminData', []) !== before; }, 8000); } catch (e) { /* follows */ }
     toast(res.ok ? 'Saved.' : '', 3000);
     return answer(res);
   }
+  /** "Update now": brings this person's pages up to date with the sheet (only what changed is rewritten). */
+  window.platformUpdateNow = function () {
+    if (LOCAL) return Promise.resolve({ ok: true, written: 0 });
+    return api('prepare', {}, 120000).catch(function () {
+      return fb.fs.setDoc(fb.fs.doc(db, 'wants', me), { at: new Date().toISOString(), pending: true }, { merge: true }).then(function () { return { ok: true, queued: true }; });
+    });
+  };
 
   /* ---------------------------------------------------------------- sign-in and start */
   async function boot() {
@@ -153,11 +189,16 @@
         function (e) { bad(new Error(/permission/i.test(e.message) ? 'Firestore refused to read your dashboard (check the security rules).' : e.message)); });
     });
     var has = !!CALLS[key(MARK, [])];
-    await fb.fs.setDoc(fb.fs.doc(db, 'wants', me), { at: new Date().toISOString(), first: !has, pending: true }, { merge: true });
     if (!has) {
       overlay('<h2>Preparing your dashboard</h2><p>This is the first time you open it. It is prepared from the sheet for you; this takes up to a minute.</p>');
+      var fast = false;
+      try { await api('prepare', { force: true }, 120000); fast = true; } catch (e) { /* queue below */ }
+      if (!fast) await fb.fs.setDoc(fb.fs.doc(db, 'wants', me), { at: new Date().toISOString(), first: true, pending: true }, { merge: true });
       try { await waitFor(function () { return !!CALLS[key(MARK, [])]; }, 180000); }
       catch (e) { throw new Error('Your dashboard was not prepared in time. The Apps Script timer (platformQuick) may be stopped; ask the admin.'); }
+    }
+    else {   // already prepared: show it now, and bring it up to date with the sheet in the background
+      api('prepare', {}, 120000).catch(function () { fb.fs.setDoc(fb.fs.doc(db, 'wants', me), { at: new Date().toISOString(), pending: true }, { merge: true }); });
     }
     overlay(null);
     userChip(me);

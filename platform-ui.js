@@ -72,7 +72,45 @@
     '.pv-role{display:inline-block;margin-top:3px;padding:1px 9px;border-radius:999px;background:var(--brand-soft);color:var(--brand-ink);font-weight:700;font-size:11px}',
     '.pv-out{border:1px solid var(--line);background:var(--card);color:var(--sbhi);border-radius:10px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}',
     '.pv-out:hover{border-color:var(--brand);color:var(--brand-ink)}',
-    '#pvUser,#themeToggle,#signOutBtn{display:none!important}',
+    '#pvUser,#themeToggle,#signOutBtn,#navNewApp{display:none!important}',
+    '.pv-upd{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--muted);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;padding:4px 6px;border-radius:8px}',
+    '.pv-upd svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
+    '.pv-upd:hover{color:var(--brand-ink);background:var(--sbhover)}.pv-upd.spin svg{animation:pvspin 1s linear infinite}',
+    '@keyframes pvspin{to{transform:rotate(360deg)}}',
+    /* access control */
+    '.pv-acc-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}',
+    '.pv-seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:3px}',
+    '.pv-seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}',
+    '.pv-seg button.on{background:var(--brand);color:#F4FBFA}',
+    '.pv-seg button b{font-weight:700;margin-left:4px;opacity:.85}',
+    '.pv-acc-bar input{height:38px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font:inherit;font-size:13.5px;background:var(--card);min-width:240px;flex:1;max-width:380px}',
+    '.pv-add{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;box-shadow:0 1px 2px rgba(20,30,50,.05)}',
+    '.pv-add b{font-size:13.5px;color:var(--ink);margin-right:4px}',
+    '.pv-add input{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font:inherit;font-size:13.5px;min-width:260px;background:#fff}',
+    '.pv-btn{height:36px;border-radius:10px;border:1px solid var(--brand);background:var(--brand);color:#F4FBFA;font:inherit;font-size:13px;font-weight:700;padding:0 14px;cursor:pointer;white-space:nowrap}',
+    '.pv-btn:hover{background:var(--brand-ink)}.pv-btn:disabled{opacity:.45;cursor:default}',
+    '.pv-btn.ghost{background:var(--card);color:var(--ink);border-color:var(--line)}.pv-btn.ghost:hover{border-color:var(--brand);color:var(--brand-ink)}',
+    '.pv-btn.danger{background:var(--card);color:var(--late);border-color:var(--late-bg)}.pv-btn.danger:hover{border-color:var(--late)}',
+    '.pv-btn.sm{height:30px;padding:0 10px;font-size:12.5px}',
+    '.pv-acc td,.pv-acc th{padding:10px 10px!important;height:auto!important}',
+    '.pv-acc th.tab{white-space:normal!important;width:64px;min-width:58px;font-size:10.5px!important;line-height:1.25;letter-spacing:.03em!important;vertical-align:bottom;padding:10px 4px!important;hyphens:manual}',
+    '.pv-acc td.who{text-align:left!important;min-width:220px;white-space:normal!important}',
+    '.pv-acc td.who .pv-lv{margin:3px 6px 3px 0;font-size:10.5px;padding:1px 8px}',
+    '.pv-acc td.who small{display:block}',
+    '.pv-acc td.who b{display:block;font-size:13.5px;color:var(--ink)}.pv-acc td.who small{color:var(--muted);font-size:12px}',
+    '.pv-acc tr.dirty td{background:#FFF8E8!important}',
+    '.pv-lv.new{background:var(--wait-bg);color:var(--wait)}',
+    '.pv-lv{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:700;white-space:nowrap}',
+    '.pv-lv.admin{background:#FBEBC6;color:#7A5200}.pv-lv.core,.pv-lv.director{background:var(--brand-soft);color:var(--brand-ink)}.pv-lv.team{background:var(--prog-bg);color:var(--prog)}.pv-lv.viewer{background:var(--unk-bg);color:var(--unk)}',
+    '.pv-acc input[type=checkbox]{width:17px;height:17px;cursor:pointer}',
+    '.pv-acc td.act{white-space:nowrap;text-align:right!important;padding-right:14px!important}',
+    '.pv-ico{width:30px;height:30px;margin-left:6px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--faint);cursor:pointer;vertical-align:middle;display:inline-grid;place-items:center}',
+    '.pv-ico svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}',
+    '.pv-ico:hover{color:var(--late);border-color:var(--late-s);background:var(--late-bg)}',
+    '.pv-st{font-size:12px;font-weight:600;margin-right:6px}.pv-st.ok{color:var(--done)}.pv-st.err{color:var(--late)}.pv-st.busy{color:var(--muted)}',
+    '.pv-help{font-size:12.5px;color:var(--muted);margin:0 0 14px;line-height:1.5}',
+    '.pv-frame{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}',
+    '.pv-frame iframe{display:block;width:100%;height:calc(100vh - 170px);min-height:560px;border:0;background:#fff}',
     '.pv-burger{display:none;position:fixed;left:12px;top:12px;z-index:70;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);font-size:18px}',
     '.pv-scrim{display:none}',
     '@media (max-width:1000px){body{padding-left:0}.navbar{transform:translateX(-100%);transition:transform .2s ease;box-shadow:0 0 40px rgba(20,30,50,.18)}body.pv-open .navbar{transform:none}.pv-burger{display:block}.page{padding:66px 14px 40px!important}body.pv-open .pv-scrim{display:block;position:fixed;inset:0;background:rgba(28,36,51,.25);z-index:55}}',
@@ -95,7 +133,8 @@
     'input[type=checkbox],input[type=radio]{accent-color:var(--brand)}',
     '.card{max-width:100%}#adminContainer,.card .scroll{overflow-x:auto}',
     'html,body{overflow-x:hidden}',
-    'body>.page-section{padding:26px 34px 48px;max-width:1680px}',
+    'body>.page-section{padding:0 34px 48px;max-width:1680px}',
+    '.page{padding-bottom:0!important}.page>.page-section{padding-bottom:48px}',
     '@media (max-width:1000px){body>.page-section{padding:66px 14px 40px}}',
     '.pills button[aria-pressed="true"],.pills .active{background:var(--brand)!important;border-color:var(--brand)!important;color:#F4FBFA!important}',
     'select,input[type=search],input[type=text]{border-color:var(--line)!important;border-radius:10px!important;background:var(--card)!important}',
@@ -211,6 +250,10 @@
     ld: '<path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v5c0 1.7 2.7 3 6 3s6-1.3 6-3V9"/>',
     newapp: '<path d="M12 8v4l3 2"/><path d="M3.05 11a9 9 0 1 1 .5 4M3 4v5h5"/>',
     admin: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    tool: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/>',
+    refresh: '<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+    external: '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>',
     people: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
     alert: '<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>'
   };
@@ -222,7 +265,7 @@
     { label: 'Delivery', items: [['navAccount', 'account'], ['navLead', 'lead'], ['navBillables', 'billables'], ['navUtilization', 'utilization'], ['navPerformance', 'performance']] },
     { label: 'AI', items: [['navAiGains', 'aigains']] },
     { label: 'People & clients', items: [['navCsat', 'csat'], ['navEsat', 'esat'], ['navHiring', 'hiring'], ['navLd', 'ld']] },
-    { label: 'Tools', items: [['navNewApp', 'newapp'], ['navAdmin', 'admin']] }
+    { label: 'Tools', items: [['navAcctTool', 'tool'], ['navAdmin', 'admin']] }
   ];
 
   function buildSidebar() {
@@ -232,8 +275,15 @@
     var summary = document.createElement('div');
     summary.id = 'navSummary'; summary.className = 'nav-item'; summary.textContent = 'Summary';
     summary.onclick = function () { window.showPage('summary'); };
+    var tool = document.createElement('div');
+    tool.id = 'navAcctTool'; tool.className = 'nav-item'; tool.textContent = 'Account Scoring tool'; tool.style.display = 'none';
+    tool.onclick = function () { window.showPage('acctool'); };
+    var made = { navSummary: summary, navAcctTool: tool };
     var keep = {};
-    GROUPS.forEach(function (g) { g.items.forEach(function (it) { keep[it[0]] = it[0] === 'navSummary' ? summary : $(it[0]); }); });
+    GROUPS.forEach(function (g) { g.items.forEach(function (it) { keep[it[0]] = made[it[0]] || $(it[0]); }); });
+    var adm = $('navAdmin'); if (adm) adm.textContent = 'Access control';
+    var old = $('navNewApp'); if (old && old.parentNode) old.parentNode.removeChild(old);   // Lead SLA is not part of the platform
+    if (old) { old.id = 'navNewApp'; old.style.display = 'none'; document.body.appendChild(old); }
     var logo = nav.querySelector('.brand-logo');
     var extras = ['signOutBtn', 'themeToggle'].map($).filter(Boolean);
     nav.innerHTML = '';
@@ -253,6 +303,10 @@
       });
     });
     var foot = document.createElement('div'); foot.className = 'pv-side-foot'; foot.id = 'pvSideFoot';
+    var upd = document.createElement('button'); upd.type = 'button'; upd.className = 'pv-upd'; upd.id = 'pvUpdate';
+    upd.innerHTML = svg('refresh') + '<span>Update from the sheet</span>';
+    upd.onclick = updateNow;
+    foot.appendChild(upd);
     extras.forEach(function (el) { foot.appendChild(el); });
     nav.appendChild(foot);
     var burger = document.createElement('button'); burger.className = 'pv-burger'; burger.setAttribute('aria-label', 'Menu'); burger.innerHTML = '&#9776;';
@@ -293,26 +347,33 @@
     page.insertBefore(s, tb ? tb.nextSibling : page.firstChild);
     var ap = $('accountPage');
     if (ap) ap.innerHTML = '<div id="pvAccount"><div class="loading">Loading Account Scoring…</div></div>';
+    var t = document.createElement('div'); t.id = 'pvToolPage'; t.className = 'page-section'; t.style.display = 'none';
+    page.appendChild(t);
+    var ad = $('adminPage');
+    if (ad) ad.innerHTML = '<div id="adminContainer"><div class="loading">Loading the access list…</div></div>';
   }
 
   /* ------------------------------------------------------------------ routing */
   var origShow = window.showPage, origApply = window.applyAccessToNav_, origRefresh = window.refreshCurrentPage;
   var landed = false;
+  var CUSTOM = {
+    summary: { section: 'summaryPage', nav: 'navSummary', draw: function () { renderSummary(); } },
+    acctool: { section: 'pvToolPage', nav: 'navAcctTool', tab: 'account', draw: function () { drawTool(); } }
+  };
   window.showPage = function (page) {
     if (!landed && access()) { landed = true; page = 'summary'; }
-    var sp = $('summaryPage'), sn = $('navSummary');
-    if (page === 'summary') {
-      if (!access()) return;
-      try { currentPage = 'summary'; } catch (e) {}
+    var own = CUSTOM[page];
+    if (own) {
+      if (!access() || (own.tab && !can(own.tab))) return;
+      try { currentPage = page; } catch (e) {}
       try { aiStopAutoRefresh_(); } catch (e) {}
-      document.querySelectorAll('.page-section').forEach(function (el) { el.style.display = el.id === 'summaryPage' ? 'block' : 'none'; });
-      document.querySelectorAll('.navbar .nav-item').forEach(function (el) { el.classList.toggle('active', el.id === 'navSummary'); });
+      document.querySelectorAll('.page-section').forEach(function (el) { el.style.display = el.id === own.section ? 'block' : 'none'; });
+      document.querySelectorAll('.navbar .nav-item').forEach(function (el) { el.classList.toggle('active', el.id === own.nav); });
       window.scrollTo(0, 0);
-      renderSummary();
+      own.draw();
       return;
     }
-    if (sp) sp.style.display = 'none';
-    if (sn) sn.classList.remove('active');
+    Object.keys(CUSTOM).forEach(function (k) { var c = CUSTOM[k], sec = $(c.section), nv = $(c.nav); if (sec) sec.style.display = 'none'; if (nv) nv.classList.remove('active'); });
     var r = origShow.call(this, page);
     window.scrollTo(0, 0);
     return r;
@@ -321,6 +382,7 @@
     var r = origApply.apply(this, arguments);
     try { applyTheme('light'); } catch (e) {}      // the platform uses one light theme
     var sn = $('navSummary'); if (sn) sn.style.display = '';
+    var tn = $('navAcctTool'); if (tn) tn.style.display = can('account') && toolUrl() ? '' : 'none';
     tidyGroups();
     drawWho();
     setTimeout(drawWho, 1500);                     // the sign-out control appears a moment later
@@ -330,6 +392,8 @@
     var cp; try { cp = currentPage; } catch (e) {}
     if (cp === 'summary') return renderSummary();
     if (cp === 'account') return window.loadAccountScoring(true);
+    if (cp === 'acctool') return drawTool(true);
+    if (cp === 'admin') return window.loadAdminPage();
     return origRefresh.apply(this, arguments);
   };
 
@@ -642,6 +706,138 @@
     t.innerHTML = head + '<tbody>' + (body || '<tr><td colspan="' + cols + '" class="pv-empty">No accounts match.</td></tr>') + '</tbody>';
     t.querySelectorAll('th.sort').forEach(function (el) { el.onclick = function () { var kk = el.getAttribute('data-k'); if (AS.sort.k === kk) AS.sort.dir *= -1; else { AS.sort.k = kk; AS.sort.dir = (kk === 'overall' || P.indexOf(kk) !== -1) ? -1 : 1; } drawAccount(); }; });
     t.querySelectorAll('tr.row').forEach(function (el) { el.onclick = function () { var id = el.getAttribute('data-id'); AS.open[id] = !AS.open[id]; drawAccount(); }; });
+  }
+
+  /* ------------------------------------------------------------------ update from the sheet */
+  function updateNow() {
+    var b = $('pvUpdate'); if (!b || b.classList.contains('spin')) return;
+    b.classList.add('spin'); b.querySelector('span').textContent = 'Updating…';
+    var done = function (msg) { b.classList.remove('spin'); b.querySelector('span').textContent = msg; setTimeout(function () { b.querySelector('span').textContent = 'Update from the sheet'; }, 4000); };
+    (window.platformUpdateNow ? window.platformUpdateNow() : Promise.resolve({ ok: true })).then(function (r) {
+      AS.data = null;
+      done(r && r.queued ? 'Queued · about a minute' : 'Up to date');
+      setTimeout(function () { try { window.refreshCurrentPage(); } catch (e) {} }, 1500);
+    }, function () { done('Could not update'); });
+  }
+
+  /* ------------------------------------------------------------------ Account Scoring tool (the scoring app itself) */
+  function toolUrl() { try { return ACCOUNT_SCORING_URL || ''; } catch (e) { return ''; } }
+  function drawTool(reload) {
+    var box = $('pvToolPage'); if (!box) return;
+    var url = toolUrl();
+    if (!box.innerHTML || reload) {
+      box.innerHTML = '<div class="pv-top"><div><h1>Account Scoring tool</h1><p>The scoring app that fills the Account Scoring sheet. It opens with your own Google account.</p></div>' +
+        '<a class="pv-btn ghost" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none" href="' + esc(url) + '" target="_blank" rel="noopener">' + svg('external').replace('<svg ', '<svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2" ') + 'Open in a new tab</a></div>' +
+        '<div class="pv-frame"><iframe title="Account Scoring tool" src="' + esc(url) + '"></iframe></div>' +
+        '<div class="pv-note">If the tool does not appear above, sign in to Google in this browser with your databeat.io account, or use "Open in a new tab".</div>';
+    }
+  }
+
+  /* ------------------------------------------------------------------ Access control (Admin) */
+  var AC = { data: null, view: 'listed', q: '', status: {}, dirty: {} };
+  var LEVEL = { admin: 'Admin', core: 'Core team', director: 'Director', team: 'Team lead', viewer: 'Shared / partner' };
+  function acTabs() { return ((AC.data && AC.data.tabs) || []).filter(function (t) { return t.id !== 'newapp'; }); }
+  function acRows() {
+    var d = AC.data || {}, q = AC.q.trim().toLowerCase();
+    var list = d.users || [];   // exactly the Access Control tab
+    return list.filter(function (u) { return !q || [u.email, u.name, u.role, u.manager].join(' ').toLowerCase().indexOf(q) !== -1; })
+      .sort(function (a, b) { return (b.isAdmin - a.isAdmin) || String(a.name || a.email).localeCompare(String(b.name || b.email)); });
+  }
+  window.loadAdminPage = function () {
+    var box = $('adminContainer'); if (!box) return;
+    if (!AC.data) box.innerHTML = '<div class="loading">Loading the access list…</div>';
+    google.script.run.withSuccessHandler(function (d) {
+      if (!d || d.success === false) { box.innerHTML = '<div class="pv-panel"><div class="pv-pb" style="padding-top:18px"><div class="pv-empty">' + esc((d && d.error) || 'Could not load the access list.') + '</div></div></div>'; return; }
+      AC.data = d; AC.dirty = {};
+      drawAdmin();
+    }).withFailureHandler(function (e) { box.innerHTML = '<div class="pv-panel"><div class="pv-pb" style="padding-top:18px"><div class="pv-empty">' + esc(e.message || e) + '</div></div></div>'; }).getAccessAdminData();
+  };
+  function drawAdmin() {
+    var box = $('adminContainer'), d = AC.data; if (!box || !d) return;
+    var users = d.users || [], sug = d.suggested || [], T = acTabs();
+    var count = function (lv) { return users.filter(function (u) { return u.level === lv; }).length; };
+    var h = '<div class="pv-top"><div><h1>Access control</h1><p>Tick the pages each person may open, then Save. Changes reach the platform and the Apps Script dashboard together (the Access Control tab).</p></div></div>' +
+      '<div class="pv-tiles">' + tile('On the access list', fmt(users.length, 0), 'people with a row on Access Control', 'var(--brand)') +
+      tile('Admins', fmt(count('admin'), 0), 'can change access', '#E4B243') +
+      tile('Core team', fmt(count('core') + count('director'), 0), 'see everything', 'var(--done-s)') +
+      tile('Team leads', fmt(count('team'), 0), 'see only their own team', 'var(--prog-s)') +
+      tile('Shared / partner', fmt(count('viewer'), 0), 'ticked pages, no headcount', 'var(--unk-s)') + '</div>' +
+      '<div class="pv-add"><b>Add someone</b><input id="pvAccNew" type="email" placeholder="name@databeat.io"><button class="pv-btn" id="pvAccAdd" type="button">Add</button>' +
+      '<span class="pv-help" style="margin:0">They are added to the Access Control tab with no pages; then tick their pages and Save.</span></div>' +
+      '<div class="pv-acc-bar"><input id="pvAccQ" type="search" placeholder="Search name, e-mail, role or manager" value="' + esc(AC.q) + '"></div>' +
+      '<div class="pv-scwrap"><table class="pv-sc pv-acc" id="pvAccTable"></table></div>' +
+      '<div class="pv-note">Admins see every page and this one. Core team see everything on the pages ticked for them, including the Business Summary headcount. Team leads see only themselves, everyone under them in the Roster and their accounts. "Shared / partner" addresses see the ticked pages but never the headcount.</div>';
+    box.innerHTML = h;
+    $('pvAccQ').addEventListener('input', function (e) { AC.q = e.target.value; drawAdminTable(); });
+    $('pvAccAdd').onclick = function () {
+      var em = String($('pvAccNew').value || '').trim().toLowerCase();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { $('pvAccNew').focus(); return; }
+      var ex = (AC.data.users || []).concat(AC.data.suggested || []).filter(function (u) { return u.email.toLowerCase() === em; })[0];
+      if (ex) { AC.q = em; drawAdmin(); return; }
+      saveRow({ email: em, isAdmin: false, tabs: {}, listed: false, name: '', level: 'viewer' }, false, []);
+    };
+    drawAdminTable();
+  }
+  function drawAdminTable() {
+    var t = $('pvAccTable'); if (!t) return;
+    var T = acTabs(), rows = acRows();
+    var SHORT = { business: 'Business summary', billables: 'Billables', lead: 'Lead scoring', account: 'Account scoring', csat: 'CSAT', esat: 'ESAT', hiring: 'RMG', performance: 'Perfor&shy;mance', aigains: 'AI Gains', utilization: 'Utiliz&shy;ation', ld: 'L&amp;D' };
+    var head = '<thead><tr><th class="l">Person</th><th class="tab">Admin</th>' + T.map(function (x) { return '<th class="tab" title="' + esc(x.label) + '">' + (SHORT[x.id] || esc(x.label)) + '</th>'; }).join('') + '<th></th></tr></thead>';
+    var body = rows.map(function (u) {
+      var id = u.email.toLowerCase(), st = AC.status[id] || {}, dirty = AC.dirty[id];
+      var sub = [u.role, u.manager ? 'under ' + u.manager : ''].filter(Boolean).join(' · ');
+      return '<tr data-e="' + esc(id) + '" class="' + (u.listed ? '' : 'new ') + (dirty ? 'dirty' : '') + '">' +
+        '<td class="who"><b>' + esc(u.name || u.email) + '</b><span class="pv-lv ' + esc(u.level || 'viewer') + '">' + esc(LEVEL[u.level] || 'Member') + '</span>' + (u.listed ? '' : '<span class="pv-lv new">not added</span>') + '<small>' + esc(u.name ? u.email : '') + (sub ? (u.name ? ' · ' : '') + esc(sub) : '') + '</small></td>' +
+        '<td><input type="checkbox" data-k="__admin"' + ((dirty ? dirty.isAdmin : u.isAdmin) ? ' checked' : '') + '></td>' +
+        T.map(function (x) { var on = dirty ? dirty.tabs[x.id] : (u.tabs || {})[x.id]; return '<td><input type="checkbox" data-k="' + esc(x.id) + '"' + (on ? ' checked' : '') + '></td>'; }).join('') +
+        '<td class="act">' + (st.msg ? '<span class="pv-st ' + st.cls + '">' + esc(st.msg) + '</span>' : '') +
+        (u.listed ? '<button class="pv-btn sm" data-a="save"' + (dirty ? '' : ' disabled') + '>Save</button><button class="pv-ico" data-a="remove" title="Remove all access" aria-label="Remove all access"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button>'
+                  : '<button class="pv-btn sm" data-a="save"' + (dirty ? '' : ' disabled') + '>Give access</button>') + '</td></tr>';
+    }).join('');
+    t.innerHTML = head + '<tbody>' + (body || '<tr><td colspan="' + (T.length + 3) + '" class="pv-empty">' + 'No one matches.' + '</td></tr>') + '</tbody>';
+    t.querySelectorAll('tr[data-e]').forEach(function (tr) {
+      var id = tr.getAttribute('data-e');
+      var u = (AC.data.users || []).concat(AC.data.suggested || []).filter(function (x) { return x.email.toLowerCase() === id; })[0];
+      tr.querySelectorAll('input[type=checkbox]').forEach(function (cb) {
+        cb.onchange = function () {
+          var d = AC.dirty[id] || { isAdmin: !!u.isAdmin, tabs: Object.assign({}, u.tabs || {}) };
+          if (cb.getAttribute('data-k') === '__admin') d.isAdmin = cb.checked; else d.tabs[cb.getAttribute('data-k')] = cb.checked;
+          var same = d.isAdmin === !!u.isAdmin && Object.keys(d.tabs).every(function (k) { return !!d.tabs[k] === !!(u.tabs || {})[k]; });
+          if (same && u.listed) delete AC.dirty[id]; else AC.dirty[id] = d;
+          delete AC.status[id];
+          drawAdminTable();
+        };
+      });
+      tr.querySelectorAll('button[data-a]').forEach(function (b) {
+        b.onclick = function () {
+          if (b.getAttribute('data-a') === 'remove') {
+            if (!window.confirm('Remove all access for ' + (u.name || u.email) + '? They will no longer be able to open the platform or the dashboard.')) return;
+            AC.status[id] = { msg: 'Removing…', cls: 'busy' }; drawAdminTable();
+            google.script.run.withSuccessHandler(function (r) { done(id, r, 'Removed'); }).withFailureHandler(function (e) { done(id, { success: false, error: e.message }); }).removeAccessUser(u.email);
+            return;
+          }
+          var d = AC.dirty[id] || { isAdmin: !!u.isAdmin, tabs: Object.assign({}, u.tabs || {}) };
+          var ids = Object.keys(d.tabs).filter(function (k) { return d.tabs[k]; });
+          if ((u.tabs || {}).newapp && ids.indexOf('newapp') === -1) ids.push('newapp');   // keep a column the platform does not show
+          saveRow(u, d.isAdmin, ids);
+        };
+      });
+    });
+  }
+  function saveRow(u, isAdmin, ids) {
+    var id = u.email.toLowerCase();
+    AC.status[id] = { msg: 'Saving…', cls: 'busy' }; drawAdminTable();
+    google.script.run.withSuccessHandler(function (r) {
+      if (r && r.success !== false && !u.listed) AC.q = id;   // show the person just added
+      done(id, r, u.listed ? 'Saved' : 'Access given');
+    }).withFailureHandler(function (e) { done(id, { success: false, error: e.message }); }).saveAccessUser(u.email, !!isAdmin, ids);
+  }
+  function done(id, r, okMsg) {
+    if (!r || r.success === false) { AC.status[id] = { msg: (r && r.error) || 'Could not save', cls: 'err' }; drawAdminTable(); return; }
+    AC.status[id] = { msg: okMsg + ' ✓', cls: 'ok' };
+    delete AC.dirty[id];
+    window.loadAdminPage();
+    setTimeout(function () { if (AC.status[id] && AC.status[id].cls === 'ok') { delete AC.status[id]; drawAdminTable(); } }, 5000);
   }
 
   /* ------------------------------------------------------------------ start */

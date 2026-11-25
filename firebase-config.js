@@ -8,3 +8,7 @@ window.FIREBASE_CONFIG = {
   appId: '1:927472605601:web:071f001c1a22f6823253e0'
 };
 window.ALLOWED_DOMAIN = 'databeat.io';
+
+// The platform's own Apps Script web app (Deploy > New deployment > Web app, Execute as: Me, Who has access: Anyone).
+// With it, access changes and data updates are applied in seconds; left empty, they go through the one-minute timer.
+window.PLATFORM_API_URL = '';
