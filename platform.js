@@ -131,6 +131,15 @@
     toast(res.ok ? 'Saved.' : '', 3000);
     return answer(res);
   }
+  /** Copilot: one question with the data already on screen; a quick "ping" wakes the script up when the chat opens. */
+  window.platformAsk = function (question, history, context) {
+    if (LOCAL) return Promise.resolve({ ok: false, error: 'Copilot does not answer in the local test.' });
+    if (!API) return Promise.resolve({ ok: false, error: 'Copilot needs the platform web app address (PLATFORM_API_URL in firebase-config.js).' });
+    return api('ask', { question: question, history: history || [], context: context || '' }, 45000).then(function (j) { return j; }, function (e) {
+      return { ok: false, error: e && e.answered ? e.message : 'Copilot could not be reached. Please try again.' };
+    });
+  };
+  window.platformPing = function () { if (API && !LOCAL) api('ping', {}, 20000).catch(function () {}); };
   /** "Update now": brings this person's pages up to date with the sheet (only what changed is rewritten). */
   window.platformUpdateNow = function () {
     if (LOCAL) return Promise.resolve({ ok: true, written: 0 });
