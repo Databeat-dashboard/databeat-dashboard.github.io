@@ -145,6 +145,34 @@
     '.refresh-btn,.guide-btn{background:var(--card)!important;border-color:var(--line)!important;border-radius:10px!important}',
     '.loading{color:var(--muted)}',
 
+    /* copilot */
+    '#cpLaunch{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 18px 12px 14px;background:var(--brand);color:#F4FBFA;font:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 10px 28px rgba(11,128,124,.35)}',
+    '#cpLaunch svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round}',
+    '#cpLaunch:hover{background:var(--brand-ink)}body.cp-open #cpLaunch{display:none}',
+    '#cpBox{position:fixed;right:22px;bottom:22px;z-index:81;width:420px;max-width:calc(100vw - 24px);height:min(640px,calc(100vh - 44px));display:none;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px rgba(20,30,50,.22);overflow:hidden}',
+    'body.cp-open #cpBox{display:flex}',
+    '.cp-hd{display:flex;align-items:center;gap:10px;padding:14px 14px 12px 16px;border-bottom:1px solid var(--line);background:var(--sbbg)}',
+    '.cp-hd b{display:block;font-size:15px;color:var(--ink)}.cp-hd small{color:var(--muted);font-size:12px}.cp-hd>div{flex:1}',
+    '.cp-x{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:13px}',
+    '.cp-x svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.cp-x:hover{color:var(--brand-ink);border-color:var(--brand)}',
+    '.cp-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}',
+    '.cp-hi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--muted);font-size:13px;line-height:1.5}.cp-hi b{display:block;color:var(--ink);font-size:15px;margin-bottom:3px}',
+    '.cp-sug{display:flex;flex-direction:column;gap:6px}',
+    '.cp-sug button{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 12px;font:inherit;font-size:13px;color:var(--brand-ink);cursor:pointer}.cp-sug button:hover{border-color:var(--brand);background:var(--brand-soft)}',
+    '.cp-m{display:flex}.cp-m.u{justify-content:flex-end}',
+    '.cp-m>div{max-width:88%;border-radius:14px;padding:10px 13px;font-size:13.5px;line-height:1.5}',
+    '.cp-m.u>div{background:var(--brand);color:#F4FBFA;border-bottom-right-radius:4px;white-space:pre-wrap}',
+    '.cp-m.a>div{background:var(--card);border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:4px}',
+    '.cp-m.a.err>div{background:var(--late-bg);border-color:var(--late-s);color:var(--late)}',
+    '.cp-m p{margin:0 0 6px}.cp-m p:last-child{margin:0}.cp-m ul{margin:4px 0 6px;padding-left:18px}.cp-m li{margin:2px 0}',
+    '.cp-t{display:block;margin-top:6px;font-size:10.5px;color:var(--faint)}',
+    '.cp-dots{display:inline-flex;gap:4px;padding:3px 0}.cp-dots i{width:7px;height:7px;border-radius:50%;background:var(--brand);opacity:.3;animation:cpd 1s infinite}.cp-dots i:nth-child(2){animation-delay:.15s}.cp-dots i:nth-child(3){animation-delay:.3s}',
+    '@keyframes cpd{50%{opacity:1;transform:translateY(-2px)}}',
+    '.cp-ft{display:flex;gap:8px;align-items:flex-end;padding:12px;border-top:1px solid var(--line);background:var(--card)}',
+    '.cp-ft textarea{flex:1;resize:none;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:13.5px;line-height:1.4;background:#fff;max-height:120px;outline:none}.cp-ft textarea:focus{border-color:var(--brand)}',
+    '#cpSend{width:40px;height:40px;border-radius:12px;border:0;background:var(--brand);color:#fff;cursor:pointer;display:grid;place-items:center}#cpSend:hover{background:var(--brand-ink)}',
+    '#cpSend svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}',
+    '@media (max-width:640px){#cpBox{right:12px;bottom:12px;width:calc(100vw - 24px);height:calc(100vh - 24px)}#cpLaunch{right:14px;bottom:14px}}',
     /* summary */
     '.pv-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 18px}',
     '.pv-top h1{margin:0;font-size:25px;letter-spacing:-.02em;color:var(--ink);line-height:1.2}',
@@ -389,7 +417,8 @@
     var tn = $('navAcctTool'); if (tn) tn.style.display = '';   // everyone on the platform
     tidyGroups();
     drawWho();
-    setTimeout(drawWho, 1500);                     // the sign-out control appears a moment later
+    setTimeout(drawWho, 1500);
+    cpMount();                     // the sign-out control appears a moment later
     return r;
   };
   window.refreshCurrentPage = function () {
@@ -844,6 +873,149 @@
     delete AC.dirty[id];
     window.loadAdminPage();
     setTimeout(function () { if (AC.status[id] && AC.status[id].cls === 'ok') { delete AC.status[id]; drawAdminTable(); } }, 5000);
+  }
+
+  /* ------------------------------------------------------------------ Copilot (answers in a few seconds: the data on screen + Gemini Flash) */
+  var CP = { open: false, busy: false, msgs: [], ctx: null, ctxAt: 0 };
+  function cpLine(a) { return a.map(function (x) { return x === null || x === undefined || x === '' ? '-' : String(x).replace(/\s+/g, ' ').trim(); }).join(' | '); }
+  function cpNum(v, d) { return num(v) === null ? '-' : fmt(v, d === undefined ? 2 : d); }
+  /** The person's own data, as compact text (it is already cut down to their team). */
+  function cpContext() {
+    if (CP.ctx && Date.now() - CP.ctxAt < 5 * 60e3) return Promise.resolve(CP.ctx);
+    var a = access() || {};
+    var jobs = {
+      ai: can('aigains') ? gs('getAiGainsData') : null, acc: can('account') ? gs('getAccountScoringData') : null,
+      lead: can('lead') ? gs('getScorecardData', ['Monthly']) : null, leadQ: can('lead') ? gs('getScorecardData', ['Quarterly']) : null,
+      csat: can('csat') ? gs('getCsatData') : null, esat: can('esat') ? gs('getEsatData') : null, rmg: can('hiring') ? gs('getRmgData') : null,
+      perf: can('performance') ? gs('getPerformanceMetricsData') : null, bill: can('billables') ? gs('getBillables') : null,
+      biz: can('business') && a.seesHeadcount !== false ? gs('getBusinessSummary') : null
+    };
+    var keys = Object.keys(jobs);
+    return Promise.all(keys.map(function (k) { return jobs[k]; })).then(function (res) {
+      var D = {}; keys.forEach(function (k, i) { D[k] = res[i]; });
+      var L = [];
+      L.push('USER: ' + (a.name || a.email) + ' (' + roleOf(a) + '). Sees: ' + (seesAll(a) ? 'the whole company' : 'only themselves, their team and their accounts') + '. Today: ' + new Date().toDateString() + '.');
+      if (D.biz && D.biz.monthlySummary) {
+        L.push('', 'BUSINESS SUMMARY (headcount by month, newest first): month | total | billable | billable% | floater | training | bench');
+        D.biz.monthlySummary.slice(0, 12).forEach(function (m) { L.push(cpLine([m.month, cpNum(m.totalEmployees, 1), cpNum(m.billableResources, 1), m.billablePercent, cpNum(m.floater, 1), cpNum(m.training, 1), cpNum(m.benched, 0)])); });
+        (D.biz.management || []).slice(0, 40).forEach(function (m, i) { if (i === 0) L.push('By manager: month | manager | total | billable | billable% | floater | training | bench'); L.push(cpLine([m.month, m.mmt, cpNum(m.totalEmployees, 1), cpNum(m.billableResources, 1), m.billablePercent, cpNum(m.floater, 1), cpNum(m.training, 1), cpNum(m.benched, 0)])); });
+      }
+      if (D.acc && D.acc.accounts) {
+        var P = D.acc.params || [];
+        L.push('', 'ACCOUNT SCORING ' + (D.acc.quarter || '') + ' (out of 5): client | project | lead | manager | director | type | status | ' + P.join(' | ') + ' | overall');
+        D.acc.accounts.forEach(function (x) { L.push(cpLine([x.client, x.project !== x.client ? x.project : '', x.lead, x.manager, x.director, x.type, x.status]) + ' | ' + P.map(function (p) { return cpNum((x.scores || {})[p]); }).join(' | ') + ' | ' + cpNum(x.overall)); });
+        if ((D.acc.history || []).length) {
+          L.push('Account scoring history (saved snapshots): client | project | period | date | overall');
+          D.acc.history.slice(-300).forEach(function (h) { L.push(cpLine([h.client, h.project !== h.client ? h.project : '', h.period, h.date, cpNum(h.overall)])); });
+        }
+      }
+      [['lead', 'MONTHLY'], ['leadQ', 'QUARTERLY']].forEach(function (k) {
+        var d = D[k[0]]; if (!d || !d.rows) return;
+        var per = {}; d.rows.forEach(function (r) { if (num(r.weighted) !== null) (per[r.period] = per[r.period] || []).push(r); });
+        var ps = Object.keys(per).sort().slice(-3); if (!ps.length) return;
+        var names = (d.params || []).map(function (p) { return p.name || p; });
+        L.push('', 'LEAD SCORING ' + k[1] + ' (score out of 5 = weighted / 20): period | person | role | manager | ' + names.join(' | ') + ' | score | band');
+        ps.forEach(function (p) { per[p].forEach(function (r) { L.push(cpLine([p, r.person, r.role, r.manager]) + ' | ' + (r.scores || []).map(function (v) { return cpNum(v); }).join(' | ') + ' | ' + cpNum(r.weighted / 20) + ' | ' + (r.band || '-')); }); });
+      });
+      if (D.ai && D.ai.rows) {
+        var rows = D.ai.rows.filter(function (r) { return !r.inactive; }), wk = {}, acc = {}, emp = {}, act = {};
+        var weeks = (D.ai.weeks || []).map(function (w) { return w.key; });
+        rows.forEach(function (r) {
+          (wk[r.week] = wk[r.week] || { s: 0, h: 0, m: 0 }); wk[r.week].s += r.saved || 0; wk[r.week].h += r.hours || 0; wk[r.week].m += r.manual || 0;
+          var a2 = acc[r.client] = acc[r.client] || { s: 0, h: 0, m: 0, last4: 0 }; a2.s += r.saved || 0; a2.h += r.hours || 0; a2.m += r.manual || 0;
+          var nm = ((D.ai.employees || {})[r.emp] || {}).name || r.emp; var e2 = emp[nm] = emp[nm] || { s: 0, h: 0 }; e2.s += r.saved || 0; e2.h += r.hours || 0;
+          act[r.activity] = (act[r.activity] || 0) + (r.saved || 0);
+        });
+        var ai = aiSummary(D.ai);
+        L.push('', 'AI GAINS. Headline (last ' + (ai ? ai.weeks : 0) + ' weeks): hours saved ' + (ai ? fmt(ai.saved, 1) : '-') + ', AI efficiency ' + (ai && ai.eff !== null ? fmt(ai.eff, 1) + '%' : '-') + ' (target 30%), headcount ' + (ai ? ai.heads : '-') + ', people logging AI ' + (ai ? ai.using : '-') + ', FTE saved ' + (ai ? fmt(ai.fte, 1) : '-') + '.');
+        L.push('Per week: week | manual h | AI h | saved h');
+        weeks.filter(function (k) { return wk[k]; }).forEach(function (k) { L.push(cpLine([k, cpNum(wk[k].m, 1), cpNum(wk[k].h, 1), cpNum(wk[k].s, 1)])); });
+        L.push('Per account (all weeks): account | manual h | AI h | saved h');
+        Object.keys(acc).sort(function (x, y) { return acc[y].s - acc[x].s; }).forEach(function (k) { L.push(cpLine([k, cpNum(acc[k].m, 1), cpNum(acc[k].h, 1), cpNum(acc[k].s, 1)])); });
+        L.push('Per person (all weeks): person | AI h | saved h');
+        Object.keys(emp).sort(function (x, y) { return emp[y].s - emp[x].s; }).slice(0, 150).forEach(function (k) { L.push(cpLine([k, cpNum(emp[k].h, 1), cpNum(emp[k].s, 1)])); });
+        L.push('Top activities by saved h: ' + Object.keys(act).sort(function (x, y) { return act[y] - act[x]; }).slice(0, 15).map(function (k) { return k + ' ' + fmt(act[k], 0); }).join('; '));
+        if ((D.ai.agents || []).length) { L.push('AI agents: client | agent | status | users | saved h | FTE'); D.ai.agents.forEach(function (g) { L.push(cpLine([g.client, g.agent, g.status, g.users, cpNum(g.saved, 0), cpNum(g.fte, 2)])); }); }
+      }
+      if (D.bill && (D.bill.rows || []).length) {
+        var M = ['organicGrowth', 'inorganicGrowth', 'billables', 'goals', 'actualLoss', 'expectedLoss'];
+        L.push('', 'BILLABLES GAIN & LOSS (current quarter ' + (D.bill.currentQuarter || '') + '): name | metric | Q1 | Q2 | Q3 | Q4 | Overall');
+        D.bill.rows.forEach(function (r) { M.forEach(function (k) { var v = (r.metrics || {})[k]; if (v) L.push(cpLine([r.name, k]) + ' | ' + v.map(function (x) { return cpNum(x.value, 1); }).join(' | ')); }); });
+        (D.bill.overallRows || []).forEach(function (r) { var v = (r.metrics || {}).overall; if (v) L.push(cpLine([r.name, 'net overall']) + ' | ' + v.map(function (x) { return cpNum(x.value, 1); }).join(' | ')); });
+      }
+      if (D.csat && D.csat.rows) { L.push('', 'CSAT (out of 10): client | manager | ' + (D.csat.periods || []).join(' | ')); D.csat.rows.forEach(function (r) { L.push(cpLine([r.client, r.manager]) + ' | ' + (r.values || []).map(function (v) { return cpNum(v.value, 1); }).join(' | ')); }); }
+      if (D.esat && D.esat.rows) { L.push('', 'ESAT (out of 5): manager | period | direct | indirect | overall'); D.esat.rows.forEach(function (r) { (r.values || []).forEach(function (v) { L.push(cpLine([r.manager, v.period, cpNum(v.direct), cpNum(v.indirect), cpNum(v.overall)])); }); }); }
+      if (D.perf && D.perf.rows) { L.push('', 'PERFORMANCE METRICS: name | ' + (D.perf.periods || []).map(function (p) { return p.label; }).join(' | ')); D.perf.rows.forEach(function (r) { L.push(cpLine([r.name]) + ' | ' + (r.values || []).map(function (v) { return cpNum(v.value); }).join(' | ')); }); }
+      if (D.rmg && D.rmg.rows) {
+        L.push('', 'RMG REQUESTS: requested | requestor | manager | client | role | resolved by (empty = open) | assigned | notes');
+        D.rmg.rows.slice(-200).forEach(function (r) { L.push(cpLine([r.dateRequested, r.requestor, r.manager, r.client, r.role, r.resolvedBy || 'OPEN', r.dateAssigned, String(r.notes || '').substring(0, 80)])); });
+      }
+      CP.ctx = L.join('\n'); CP.ctxAt = Date.now();
+      return CP.ctx;
+    });
+  }
+  function cpMd(t) {
+    var lines = esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').split('\n'), out = '', inList = false;
+    lines.forEach(function (l) {
+      var m = /^\s*(?:[-*•]|\d+\.)\s+(.*)$/.exec(l);
+      if (m) { if (!inList) { out += '<ul>'; inList = true; } out += '<li>' + m[1] + '</li>'; return; }
+      if (inList) { out += '</ul>'; inList = false; }
+      if (l.trim()) out += '<p>' + l + '</p>';
+    });
+    return out + (inList ? '</ul>' : '');
+  }
+  function cpSuggest() {
+    var s = [];
+    if (can('account')) s.push('Which of my accounts have the lowest score?');
+    if (can('aigains')) s.push('How is AI efficiency trending?');
+    if (can('lead')) s.push('Who needs support in lead scoring?');
+    if (can('csat')) s.push('Which clients have CSAT below 8?');
+    if (can('hiring')) s.push('List the open RMG requests');
+    return s.slice(0, 4);
+  }
+  function cpDraw() {
+    var body = $('cpBody'); if (!body) return;
+    var h = '';
+    if (!CP.msgs.length) h += '<div class="cp-hi"><b>Hi ' + esc(titleCase(String((access() || {}).name || '').split(' ')[0])) + '</b>Ask anything about the numbers you can see: accounts, leads, AI gains, CSAT…</div><div class="cp-sug">' + cpSuggest().map(function (q) { return '<button type="button" data-q="' + esc(q) + '">' + esc(q) + '</button>'; }).join('') + '</div>';
+    CP.msgs.forEach(function (m) { h += m.role === 'user' ? '<div class="cp-m u"><div>' + esc(m.text) + '</div></div>' : '<div class="cp-m a' + (m.error ? ' err' : '') + '"><div>' + cpMd(m.text) + (m.ms ? '<span class="cp-t">' + (m.ms / 1000).toFixed(1) + ' s</span>' : '') + '</div></div>'; });
+    if (CP.busy) h += '<div class="cp-m a"><div><span class="cp-dots"><i></i><i></i><i></i></span></div></div>';
+    body.innerHTML = h;
+    body.querySelectorAll('.cp-sug button').forEach(function (b) { b.onclick = function () { cpAsk(b.getAttribute('data-q')); }; });
+    body.scrollTop = body.scrollHeight;
+  }
+  function cpAsk(q) {
+    q = String(q || '').trim(); if (!q || CP.busy) return;
+    var history = CP.msgs.filter(function (m) { return !m.error; }).slice(-8).map(function (m) { return { role: m.role, text: m.text }; });
+    CP.msgs.push({ role: 'user', text: q }); CP.busy = true; cpDraw();
+    var t0 = Date.now();
+    cpContext().then(function (ctx) { return window.platformAsk ? window.platformAsk(q, history, ctx) : { ok: false, error: 'Copilot is not available.' }; })
+      .then(function (r) {
+        CP.busy = false;
+        CP.msgs.push(r && r.ok ? { role: 'assistant', text: r.answer, ms: Date.now() - t0 } : { role: 'assistant', text: (r && r.error) || 'Copilot could not answer.', error: true });
+        cpDraw();
+      }, function () { CP.busy = false; CP.msgs.push({ role: 'assistant', text: 'Copilot could not be reached. Please try again.', error: true }); cpDraw(); });
+  }
+  function cpToggle(open) {
+    CP.open = open === undefined ? !CP.open : open;
+    document.body.classList.toggle('cp-open', CP.open);
+    if (CP.open) { if (window.platformPing) window.platformPing(); cpContext(); cpDraw(); setTimeout(function () { var t = $('cpText'); if (t) t.focus(); }, 50); }
+  }
+  function cpMount() {
+    if ($('cpLaunch')) return;
+    var b = document.createElement('button'); b.id = 'cpLaunch'; b.type = 'button'; b.innerHTML = svg('aigains') + '<span>Ask Copilot</span>'; b.onclick = function () { cpToggle(); };
+    var box = document.createElement('div'); box.id = 'cpBox'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Copilot');
+    box.innerHTML = '<div class="cp-hd"><span class="pv-ic">' + svg('aigains') + '</span><div><b>Copilot</b><small>Answers only from what you can see</small></div>' +
+      '<button type="button" class="cp-x" id="cpNew" title="New chat">' + svg('refresh') + '</button><button type="button" class="cp-x" id="cpClose" title="Close">✕</button></div>' +
+      '<div class="cp-body" id="cpBody"></div>' +
+      '<div class="cp-ft"><textarea id="cpText" rows="1" placeholder="Ask about your accounts, leads, AI gains…"></textarea><button type="button" id="cpSend" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>';
+    document.body.appendChild(b); document.body.appendChild(box);
+    $('cpClose').onclick = function () { cpToggle(false); };
+    $('cpNew').onclick = function () { CP.msgs = []; CP.ctx = null; cpDraw(); };
+    var ta = $('cpText');
+    var send = function () { var v = ta.value; ta.value = ''; ta.style.height = ''; cpAsk(v); };
+    $('cpSend').onclick = send;
+    ta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+    ta.addEventListener('input', function () { ta.style.height = ''; ta.style.height = Math.min(120, ta.scrollHeight) + 'px'; });
   }
 
   /* ------------------------------------------------------------------ start */
